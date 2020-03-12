@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- 页面meta -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>教学管理系统</title>
+        <meta name="description" content="张卢斌">
+        <meta name="keywords" content="张卢斌">
+        <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+        <!-- 引入样式 -->
+        <link rel="stylesheet" href="../plugins/elementui/index.css">
+        <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../css/style.css">
+    </head>
+    <body class="hold-transition">
+        <div id="app">
+            <div class="content-header">
+                <h1>教学管理<small>选课系统</small></h1>
+                <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb">
+                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+                    <el-breadcrumb-item>教学管理</el-breadcrumb-item>
+                    <el-breadcrumb-item>选课系统</el-breadcrumb-item>
+                </el-breadcrumb>
+            </div>
+            <div class="app-container">
+                <div class="box">
+                    <div class="filter-container">
+                        <el-input placeholder="课程编号/课程名称" v-model="pagination.queryString" style="width: 200px;" class="filter-item"></el-input>
+                        <el-button @click="findPage(1)" class="dalfBut">查询</el-button>
+                    </div>
+                    <el-table size="small" current-row-key="cid" :data="dataList" stripe highlight-current-row>
+                        <el-table-column type="index" align="center" label="序号"></el-table-column>
+                        <el-table-column prop="cid" align="center" label="课程编号"></el-table-column>
+                        <el-table-column prop="cname" align="center" label="课程名称"></el-table-column>
+                        <el-table-column prop="teacher_tname" label="教师姓名" align="center"></el-table-column>
+                        <el-table-column prop="course_time" align="center" label="上课时间" ></el-table-column>
+                        <el-table-column label="课程性质" align="center">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.type == '1' ? '专选课' : '任选课'}}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column prop="credit" align="center" label="学分" ></el-table-column>
+                        <el-table-column  align="center">
+                            <template slot-scope="scope">
+                                <el-button type="primary" size="mini" @click="handleChooose(scope.row)">选课</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <div class="pagination-container">
+                        <el-pagination
+                            class="pagiantion"
+                            @current-change="handleCurrentChange"
+                            :current-page="pagination.currentPage"
+                            :page-size="pagination.pageSize"
+                            layout="total, prev, pager, next, jumper"
+                            :total="pagination.total">
+                        </el-pagination>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <!-- 引入组件库 -->
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script src="../js/axios-0.18.0.js"></script>
+    <script>
+        axios.defaults.withCredentials=true;
+        var vue = new Vue({
+            el: '#app',
+            data:{
+                pagination: {//分页相关模型数据
+					  currentPage: 1,//当前页码
+					  pageSize:10,//每页显示的记录数
+					  total:0,//总记录数
+					  queryString:null//查询条件
+				},
+				dataList: [],//当前页要展示的分页列表数据
+                backend_url:"http://localhost:9002"
+            },
+            //钩子函数，VUE对象初始化完成后自动执行
+            created() {
+                this.findPage();
+            },
+            methods: {
+                // 选课
+                handleChooose(row) {
+                    //获取数据
+                    axios.post(this.backend_url+"/course/chooseByCid.do?cid="+row.cid).then((response)=>{
+                        if(response.data.flag){
+                            //成功
+                            this.$message.success(response.data.message);
+                            this.findPage();
+                        }else{
+                            this.$message.error(response.data.message);
+                        }
+                    }).catch((error)=>{
+                        this.showMessage(error);
+                    });
+                },
+                //分页查询
+                findPage(pageNo) {
+                    //如果传入页码则先更新模型中的页码
+                    if(pageNo){
+                        this.pagination.currentPage = pageNo;
+                    }
+                    //构造请求参数
+                    var param = {
+                        currentPage: this.pagination.currentPage,
+                        pageSize: this.pagination.pageSize,
+                        queryString: this.pagination.queryString
+                    };
+                    //发起http请求
+                    axios.get(this.backend_url + "/course/chooseFindPage.do",{ params:param}).then((response) => {
+                        //数据集和总数赋值给模型
+                        this.dataList=response.data.rows;
+                        this.pagination.total = response.data.total;
+                    }).catch((error)=>{
+                        this.showMessage(error);
+                    });
+
+                },
+                //切换页码
+                handleCurrentChange(currentPage) {
+                    this.pagination.currentPage = currentPage;
+                    this.findPage();
+                },
+                //权限不足提示
+                showMessage(r){
+                    console.log(r);
+                    if (r.message.indexOf("403") != -1){
+                        this.$message.error("无权访问");
+                    }else{
+                        this.$message.error("网络异常");
+                    }
+                }
+            }
+        })
+    </script>
+</html>

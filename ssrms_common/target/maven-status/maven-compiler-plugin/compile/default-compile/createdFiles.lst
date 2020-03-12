@@ -1,0 +1,9 @@
+com\yanghui\ssrms\pojo\Role.class
+com\yanghui\ssrms\pojo\Ssr.class
+com\yanghui\ssrms\entity\PageResult.class
+com\yanghui\ssrms\pojo\Permission.class
+com\yanghui\ssrms\common\MessageConst.class
+com\yanghui\ssrms\pojo\Menu.class
+com\yanghui\ssrms\entity\QueryPageBean.class
+com\yanghui\ssrms\entity\Result.class
+com\yanghui\ssrms\pojo\User.class

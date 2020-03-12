@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yanghui.ssrms.dao.RoleDao">
+    <select id="selectByUserId" resultType="com.yanghui.ssrms.pojo.Role">
+        select tr.* from t_role tr left join t_user_role tur on tr.id = tur.role_id
+        where tur.user_id = #{userId}
+    </select>
+
+    <select id="selectByCondition" resultType="com.yanghui.ssrms.pojo.Role">
+        select * from t_role
+        <if test="queryString!=null and queryString.length > 0">
+            WHERE name LIKE CONCAT('%',#{queryString},'%')
+            or keyword like CONCAT('%',#{queryString},'%')
+        </if>
+    </select>
+    <select id="selectById" resultType="com.yanghui.ssrms.pojo.Role">
+        select * from t_role where id=#{id}
+    </select>
+    <select id="selectMenuIdsByRoleId" resultType="java.lang.Integer">
+        select menu_id from t_role_menu where role_id = #{id};
+    </select>
+    <select id="findPermissionIdsByRoleId" resultType="java.lang.Integer">
+        select permission_id from t_role_permission where role_id = #{id};
+    </select>
+    <insert id="insert">
+        <selectKey keyProperty="id" resultType="java.lang.Integer" order="AFTER">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into t_role (name, keyword)
+        VALUES (#{name},#{keyword})
+    </insert>
+    <insert id="insertRoleAndMenu">
+        insert into t_role_menu (role_id, menu_id)
+        VALUES (#{id},#{menuId})
+    </insert>
+    <insert id="insertRoleAndPermission">
+        insert into t_role_permission (role_id, permission_id)
+        VALUES (#{id},#{permissionId})
+    </insert>
+    <update id="update">
+        update t_role
+        set name=#{name},
+        keyword=#{keyword}
+        where id=#{id}
+    </update>
+    <delete id="deleteRoleAndMeunByRoleId">
+        delete from t_role_menu
+        where role_id=#{id}
+    </delete>
+    <delete id="deleteRoleAndPremissionByRoleId">
+        delete from t_role_permission
+        where role_id=#{id}
+    </delete>
+    <select id="selectAll" resultType="com.yanghui.ssrms.pojo.Role">
+        select * from t_role
+    </select>
+    <select id="countPermissionByRoleId" resultType="java.lang.Long">
+        select count(1) from t_role_permission
+        where role_id = #{id}
+    </select>
+    <select id="countMenuByRoleId" resultType="java.lang.Long">
+        select count(1) from t_role_menu
+        where role_id = #{id}
+    </select>
+    <delete id="deleteById">
+        delete from t_role
+        where id = #{id}
+    </delete>
+</mapper>

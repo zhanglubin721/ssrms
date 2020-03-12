@@ -1,0 +1,4 @@
+com\yanghui\ssrms\service\RoleService.class
+com\yanghui\ssrms\service\UserService.class
+com\yanghui\ssrms\service\MenuService.class
+com\yanghui\ssrms\service\SsrService.class

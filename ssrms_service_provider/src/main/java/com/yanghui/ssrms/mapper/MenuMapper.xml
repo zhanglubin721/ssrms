@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yanghui.ssrms.dao.MenuDao">
+    <insert id="insert">
+        insert into t_menu (name, linkUrl, path, priority, icon, description, parentMenuId, level)
+        VALUES (#{name},#{linkUrl},#{path},#{priority},#{icon},#{description},#{parentMenuId},#{level})
+    </insert>
+    <select id="selectByConditon" resultType="com.yanghui.ssrms.pojo.Menu">
+        select * from t_menu
+        <if test="queryString != null and queryString.length > 0">
+            where name like concat('%',#{queryString},'%')
+        </if>
+    </select>
+    <select id="countRoleByMenuId" resultType="java.lang.Long">
+        select count(1)
+        from t_role_menu
+        where menu_id = #{id};
+    </select>
+    <delete id="deleteById">
+        delete
+        from t_menu
+        where id = #{id}
+    </delete>
+    <select id="seleceById" resultType="com.yanghui.ssrms.pojo.Menu">
+        select * from t_menu where id=#{id}
+    </select>
+    <update id="update">
+        update t_menu
+        set name=#{name},
+        linkUrl=#{linkUrl},
+        path=#{path},
+        priority=#{priority},
+        icon=#{icon},
+        description=#{description},
+        parentMenuId=#{parentMenuId},
+        level=#{level}
+        where id=#{id}
+    </update>
+    <select id="selectAll" resultType="com.yanghui.ssrms.pojo.Menu">
+        select * from t_menu;
+    </select>
+    <select id="selectOnelevelById" resultType="java.lang.Integer">
+        select id from t_menu
+        where id=#{menuId} and level=1
+    </select>
+<!--    <resultMap id="MenuBaseResultMap" type="CheckGroup"/>-->
+    <resultMap id="MenuResultMap" type="com.yanghui.ssrms.pojo.Menu" >
+        <collection property="children"
+                    javaType="ArrayList"
+                    ofType="com.yanghui.ssrms.pojo.Menu"
+                    column="path=path"
+                    select="com.yanghui.ssrms.dao.MenuDao.selectTwoLeverMenu"/>
+    </resultMap>
+    <select id="selectOneLeverMenu" resultMap="MenuResultMap">
+        select * from t_menu where id = #{oneLeverMenuId}
+    </select>
+    <select id="selectTwoLeverMenu" resultType="com.yanghui.ssrms.pojo.Menu">
+        select * from t_menu where path LIKE CONCAT('/',#{path},'%')
+    </select>
+    <select id="selectOnelevelIdByTwolevelId" resultType="java.lang.Integer">
+        select id from t_menu
+        where path = (select substring((select path from t_menu where id = #{menuId}),2,1))
+    </select>
+</mapper>

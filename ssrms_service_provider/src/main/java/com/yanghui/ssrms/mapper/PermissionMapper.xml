@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yanghui.ssrms.dao.PermissionDao">
+    <select id="selectByRoleId" resultType="com.yanghui.ssrms.pojo.Permission">
+        select tp.* from t_permission tp left join t_role_permission trp on tp.id = trp.permission_id
+        where trp.role_id = #{roleId}
+    </select>
+</mapper>

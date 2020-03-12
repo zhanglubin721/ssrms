@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- 页面meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>传智健康</title>
+    <meta name="description" content="传智健康">
+    <meta name="keywords" content="传智健康">
+    <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="../plugins/elementui/index.css">
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body class="hold-transition skin-purple sidebar-mini">
+<div id="app">
+    <div class="login-container">
+        <div class="loginBox">
+            <form method="post" class="login-form" id="loginForm">
+                <div class="title-container">
+                    <div class="logoInfo clearfix">
+                        <em class="logo"></em>
+                    </div>
+                </div>
+                <div>
+                        <span class="svg-container svg-container_login">
+                          <span class="user"></span>
+                        </span>
+                    <input type="text" id="username" name="username" placeholder="请输入用户名"/>
+                </div>
+                <div>
+                        <span class="svg-container">
+                          <span class="username"></span>
+                        </span>
+                    <input type="password" id="password" name="password" placeholder="请输入密码"/>
+                </div>
+                <input type="button" style="width:100%;margin-bottom:30px;" value="登录" @click="login()"></input>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+<!-- 引入组件库 -->
+<script src="../js/vue.js"></script>
+<script src="../plugins/elementui/index.js"></script>
+<script type="text/javascript" src="../js/jquery.min.js"></script>
+<script src="../js/axios-0.18.0.js"></script>
+<script src="../js/jquery-heima-0.0.1.js"></script>
+<script>
+    axios.defaults.withCredentials = true;
+    var vue = new Vue({
+        el: '#app',
+        data: {
+            backend_url: "http://localhost:9002",
+        },
+        methods: {
+            //登录
+            login() {
+                var username = $("#username").val();
+                var password = $("#password").val();
+                console.log("user:" + username + "pass:" + password);
+                var formParams = $("#loginForm").serialize();
+                //////////////////////下面是常用的几种使用axios发送http请求的方式
+                //axios.get(url)
+                //axios.get(url,config)
+                //axios.post(url)
+                //axios.post(url,body)
+                //axios.post(url,body,config)
+                axios.post(this.backend_url + "/login.do", formParams, {
+                    headers: {'content-type': 'application/x-www-form-urlencoded'},
+                }).then((response) => {
+                    if (response.data.flag) {
+                        console.log(response.data);
+                        //登录成功,跳转到index.html
+                        location.href = "main.html";
+                    } else {
+                        //失败，提示失败信息
+                        this.$message.error(response.data.message);
+                    }
+                });
+            }
+        }
+    });
+</script>
+</html>

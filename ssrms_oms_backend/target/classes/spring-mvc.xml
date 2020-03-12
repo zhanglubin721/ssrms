@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <!--自动扫包-->
+    <context:component-scan base-package="com.yanghui.ssrms.controller"/>
+    <!--支持跨域-->
+    <mvc:cors>
+        <mvc:mapping path="/**"
+                     allow-credentials="true"
+                     allowed-origins="http://localhost:8080"
+                     allowed-methods="GET,POST,PUT,DELETE,OPTIONS"
+                     max-age="3600"/>
+    </mvc:cors>
+    <!--注解驱动
+    当配置了mvc:annotation-driven/后，启用注解驱动。
+    然后Spring通过context:component-scan/标签的配置，会自动将扫描到的@Component，@Controller，@Service，@Repository等注解标记的组件注册到工厂中，来处理客户的请求。
+    -->
+    <mvc:annotation-driven>
+        <mvc:message-converters>
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+                <property name="supportedMediaTypes" value="application/json; charset=utf-8"/>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+    <!--dubbo配置-->
+    <dubbo:application name="ssrms-backend"/>
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+    <dubbo:annotation package="com.yanghui.ssrms.controller"/>
+</beans>

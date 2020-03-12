@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yanghui.ssrms.dao.SsrDao">
+
+    <select id="selectByConditon" resultType="com.yanghui.ssrms.pojo.Ssr">
+        select * from ssr
+        <if test="queryString != null and queryString.length > 0">
+            where ssrname like concat('%',#{queryString},'%') or ssrid like concat('%',#{queryString},'%')
+        </if>
+    </select>
+    <delete id="deleteBySsrid" parameterType="long">
+        delete from ssr
+        where ssrid = #{ssrid}
+    </delete>
+    <insert id="insertSsr" parameterType="com.yanghui.ssrms.pojo.Ssr">
+        insert into ssr (ssrid, ssrname, state) VALUES
+        (#{ssrid}, #{ssrname}, #{state})
+    </insert>
+    <select id="selectBySsrid" resultType="com.yanghui.ssrms.pojo.Ssr" parameterType="long">
+        select * from ssr
+        where ssrid = #{ssrid}
+    </select>
+    <delete id="updateSsr" parameterType="com.yanghui.ssrms.pojo.Ssr">
+        update ssr set
+        ssrname = #{ssrname},
+        state = #{state}
+        where ssrid = #{ssrid}
+    </delete>
+</mapper>
