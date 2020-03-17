@@ -32,6 +32,8 @@ public class SsrServiceImpl implements SsrService {
         PageHelper.startPage(queryPageBean.getCurrentPage(),queryPageBean.getPageSize());
         // 分页查询数据库
         Page<Ssr> page = ssrDao.selectByConditon(queryPageBean.getQueryString());
+        log.info("[测试获取查询日期]day:{}", queryPageBean.getDay());
+        log.info("[测试获取查询时间段]time:{}", queryPageBean.getTime());
         //封装分页数据
         return new PageResult(page.getTotal(),page.getResult());
     }

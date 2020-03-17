@@ -1,6 +1,0 @@
-0:0:0:0:0:0:0:1 - - [12/Mar/2020:01:10:30 +0800] "GET /ssr/appointment.do HTTP/1.1" 200 47 http-bio-9002-exec-2 390
-0:0:0:0:0:0:0:1 - - [12/Mar/2020:11:58:10 +0800] "POST /login.do HTTP/1.1" 200 38 http-bio-9002-exec-1 939
-0:0:0:0:0:0:0:1 - - [12/Mar/2020:11:58:10 +0800] "GET /user/getUsername.do HTTP/1.1" 200 61 http-bio-9002-exec-2 17
-0:0:0:0:0:0:0:1 - - [12/Mar/2020:11:58:11 +0800] "GET /user/getMenu.do HTTP/1.1" 200 1192 http-bio-9002-exec-3 154
-0:0:0:0:0:0:0:1 - - [12/Mar/2020:11:58:11 +0800] "GET /course/findPage.do?currentPage=1&pageSize=10 HTTP/1.1" 404 949 http-bio-9002-exec-5 7
-0:0:0:0:0:0:0:1 - - [12/Mar/2020:11:58:21 +0800] "GET /ssr/findPage.do?currentPage=1&pageSize=10 HTTP/1.1" 200 260 http-bio-9002-exec-6 157
