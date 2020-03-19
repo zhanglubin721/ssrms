@@ -5,5 +5,7 @@ com\yanghui\ssrms\pojo\Permission.class
 com\yanghui\ssrms\common\MessageConst.class
 com\yanghui\ssrms\pojo\Menu.class
 com\yanghui\ssrms\entity\QueryPageBean.class
+com\yanghui\ssrms\pojo\Order.class
 com\yanghui\ssrms\entity\Result.class
 com\yanghui\ssrms\pojo\User.class
+com\yanghui\ssrms\entity\SsrPageResult.class

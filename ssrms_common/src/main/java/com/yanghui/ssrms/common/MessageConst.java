@@ -40,4 +40,7 @@ public class MessageConst {
     public static final String CHOOSE_COURSE_FAIL = "选课失败";
     public static final String CANCLE_COURSE_SUCCESS = "取消选课成功";
     public static final String CANCLE_COURSE_FAIL = "取消选课失败";
+
+    public static final String APPOINTMENT_SSR_SUCCESS = "预约自习室成功";
+    public static final String APPOINTMENT_SSR_FAIL = "预约自习室失败";
 }

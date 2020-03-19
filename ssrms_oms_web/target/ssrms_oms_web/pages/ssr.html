@@ -27,20 +27,20 @@
                 <div class="box">
                     <div class="filter-container">
                         <el-input placeholder="编号/位置" v-model="pagination.queryString" style="width: 200px;" class="filter-item"></el-input>
-                        <el-select v-model="value1" placeholder="选择预约日期" v-model="pagination.day">
+                        <el-select v-model="chooseDay" placeholder="选择预约日期" v-model="pagination.day">
                             <el-option
-                                    v-for="item in day"
-                                    :key="item.value1"
-                                    :label="item.label"
-                                    :value="item.value1">
+                                    v-for="item in optionalDay"
+                                    :key="item.labelDay"
+                                    :label="item.labelDay"
+                                    :value="item.labelDay">
                             </el-option>
                         </el-select>
-                        <el-select v-model="value2" placeholder="选择时间段" v-model="pagination.time">
+                        <el-select v-model="chooseTime" placeholder="选择时间段" v-model="pagination.time">
                             <el-option
-                                    v-for="item in time"
-                                    :key="item.value2"
-                                    :label="item.label"
-                                    :value="item.value2">
+                                    v-for="item in optionalTime"
+                                    :key="item.labelTime"
+                                    :label="item.labelTime"
+                                    :value="item.labelTime">
                             </el-option>
                         </el-select>
                         <el-button @click="findPage(1)" class="dalfBut">查询</el-button>
@@ -158,9 +158,7 @@
 					  currentPage: 1,//当前页码
 					  pageSize:10,//每页显示的记录数
 					  total:0,//总记录数
-					  queryString:null,//查询条件
-                      day:null,//查询日期
-                      time:null//查询时间段
+					  queryString:null//查询条件
 				},
 				dataList: [],//当前页要展示的分页列表数据
                 formData: {},//表单数据
@@ -168,28 +166,10 @@
                 dialogFormVisible4Edit:false,//编辑表单是否可见
                 rules: {//校验规则
                 },
-                day: [{
-                    value1: '选项1',
-                    label: '3月17号'
-                }, {
-                    value1: '选项2',
-                    label: '3月18号'
-                }],
-                time: [{
-                    value2: '选项1',
-                    label: '9点-12点'
-                }, {
-                    value2: '选项2',
-                    label: '12点-15点'
-                }, {
-                    value2: '选项3',
-                    label: '15点-18点'
-                }, {
-                    value2: '选项4',
-                    label: '18点-21点'
-                }],
-                value1: '',
-                value2: '',
+                optionalDay: [],
+                optionalTime: [],
+                chooseDay: '',
+                chooseTime: '',
                 backend_url:"http://localhost:9002"
             },
             //钩子函数，VUE对象初始化完成后自动执行
@@ -265,13 +245,17 @@
                     var param = {
                         currentPage: this.pagination.currentPage,
                         pageSize: this.pagination.pageSize,
-                        queryString: this.pagination.queryString
+                        queryString: this.pagination.queryString,
+                        chooseDay: this.chooseDay,
+                        chooseTime: this.chooseTime
                     };
                     //发起http请求
                     axios.get(this.backend_url + "/ssr/findPage.do",{ params:param}).then((response) => {
                         //数据集和总数赋值给模型
                         this.dataList=response.data.rows;
                         this.pagination.total = response.data.total;
+                        this.optionalDay = response.data.optionalDay;
+                        this.optionalTime = response.data.optionalTime;
                     }).catch((error)=>{
                         this.showMessage(error);
                     });

@@ -1,8 +1,8 @@
 package com.yanghui.ssrms.service;
 
 
-import com.yanghui.ssrms.entity.PageResult;
 import com.yanghui.ssrms.entity.QueryPageBean;
+import com.yanghui.ssrms.entity.SsrPageResult;
 import com.yanghui.ssrms.pojo.Ssr;
 
 public interface SsrService {
@@ -11,7 +11,7 @@ public interface SsrService {
      * @param queryPageBean
      * @return
      */
-    PageResult pageQuery(QueryPageBean queryPageBean);
+    SsrPageResult pageQuery(QueryPageBean queryPageBean);
 
     void delete(Long ssrid);
 
@@ -21,6 +21,6 @@ public interface SsrService {
 
     void edit(Ssr ssr);
 
-    void appointment();
+    void appointment(Long ssrid, String chooseDay, String chooseTime, String username);
 
 }

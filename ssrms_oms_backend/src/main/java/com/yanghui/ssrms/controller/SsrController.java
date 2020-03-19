@@ -2,13 +2,15 @@ package com.yanghui.ssrms.controller;
 
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.yanghui.ssrms.common.MessageConst;
-import com.yanghui.ssrms.entity.PageResult;
 import com.yanghui.ssrms.entity.QueryPageBean;
 import com.yanghui.ssrms.entity.Result;
+import com.yanghui.ssrms.entity.SsrPageResult;
 import com.yanghui.ssrms.pojo.Ssr;
 import com.yanghui.ssrms.service.SsrService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
@@ -23,13 +25,13 @@ public class SsrController {
 
     @GetMapping("/findPage")
     @PreAuthorize("hasAuthority('SSR_QUERY')")
-    public PageResult findPage(QueryPageBean queryPageBean) {
+    public SsrPageResult findPage(QueryPageBean queryPageBean) {
         log.info("[自习室信息-分页查询]data:{}", queryPageBean);
         try {
             return ssrService.pageQuery(queryPageBean);
         } catch (RuntimeException e) {
             log.error("[自习室信息-分页查询]异常", e);
-            return new PageResult(0L, Collections.emptyList());
+            return new SsrPageResult(0L, Collections.emptyList(), null, null);
         }
     }
 
@@ -85,15 +87,25 @@ public class SsrController {
         }
     }
 
-    @GetMapping("appointment")
-    public Result appointment() {
+    @PostMapping("/appointment")
+    @PreAuthorize("hasAnyAuthority('SSR_APPOINTMENT')")
+    public Result appointment(Long ssrid, String chooseDay, String chooseTime) {
+        String username = getUsername();
         try{
-            ssrService.appointment();
-            return new Result(true, MessageConst.EDIT_SSR_SUCCESS);
+            ssrService.appointment(ssrid, chooseDay, chooseTime, username);
+            return new Result(true, MessageConst.APPOINTMENT_SSR_SUCCESS);
         } catch (RuntimeException e) {
-            log.error("[缓存异常]异常", e);
-            return new Result(false, MessageConst.EDIT_SSR_FAIL);
+            log.error("[预约异常]异常", e);
+            return new Result(false, MessageConst.APPOINTMENT_SSR_FAIL);
         }
+    }
 
+    public String getUsername() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (null != principal && principal instanceof User) {
+            User user = (User) principal;
+            return user.getUsername();
+        }
+        return null;
     }
 }

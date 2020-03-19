@@ -18,6 +18,6 @@ public class QueryPageBean implements Serializable {
     private Integer currentPage;
     private Integer pageSize;
     private String queryString;
-    private String day;
-    private String time;
+    private String chooseDay;
+    private String chooseTime;
 }

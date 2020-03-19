@@ -1,11 +1,12 @@
-com\yanghui\ssrms\dao\UserRoleDao.class
 com\yanghui\ssrms\service\impl\MenuServiceImpl.class
 com\yanghui\ssrms\service\impl\SsrServiceImpl.class
-com\yanghui\ssrms\dao\TestDao.class
 com\yanghui\ssrms\service\impl\RoleServiceImpl.class
-com\yanghui\ssrms\service\impl\UserServiceImpl.class
 com\yanghui\ssrms\dao\SsrDao.class
-com\yanghui\ssrms\dao\MenuDao.class
-com\yanghui\ssrms\dao\UserDao.class
 com\yanghui\ssrms\dao\PermissionDao.class
 com\yanghui\ssrms\dao\RoleDao.class
+com\yanghui\ssrms\dao\UserRoleDao.class
+com\yanghui\ssrms\dao\TestDao.class
+com\yanghui\ssrms\service\impl\UserServiceImpl.class
+com\yanghui\ssrms\dao\OrderDao.class
+com\yanghui\ssrms\dao\MenuDao.class
+com\yanghui\ssrms\dao\UserDao.class

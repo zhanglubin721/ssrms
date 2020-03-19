@@ -12,6 +12,7 @@
     <artifactId>ssrms_common</artifactId>
 
     <packaging>jar</packaging>
+
     <dependencies>
         <dependency>
             <groupId>org.projectlombok</groupId>
