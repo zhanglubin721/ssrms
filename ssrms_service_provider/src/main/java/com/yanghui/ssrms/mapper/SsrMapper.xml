@@ -2,10 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yanghui.ssrms.dao.SsrDao">
 
-    <select id="selectByConditon" resultType="com.yanghui.ssrms.pojo.Ssr">
-        select * from ssr
+    <select id="selectByConditon" resultType="com.yanghui.ssrms.pojo.Ssr" parameterType="com.yanghui.ssrms.entity.QueryPageBean">
+        select * from ssr where ssrid not in
+        (select ssr_ssrid from t_order where chooseday = #{chooseDay} and choosetime = #{chooseTime})
         <if test="queryString != null and queryString.length > 0">
-            where ssrname like concat('%',#{queryString},'%') or ssrid like concat('%',#{queryString},'%')
+            and (ssrname like concat('%',#{queryString},'%') or ssrid like concat('%',#{queryString},'%'))
         </if>
     </select>
     <delete id="deleteBySsrid" parameterType="long">

@@ -1,16 +1,17 @@
 package com.yanghui.ssrms.dao;
 
 import com.github.pagehelper.Page;
+import com.yanghui.ssrms.entity.QueryPageBean;
 import com.yanghui.ssrms.pojo.Ssr;
 import org.apache.ibatis.annotations.Param;
 
 public interface SsrDao {
     /**
      * 分页查询
-     * @param queryString
+     * @param queryPageBean
      * @return Page<Student>
      */
-    Page<Ssr> selectByConditon(@Param("queryString") String queryString);
+    Page<Ssr> selectByConditon(QueryPageBean queryPageBean);
 
     /**
      * 删除自习室

@@ -39,7 +39,7 @@ public class SsrServiceImpl implements SsrService {
         //使用分页插件
         PageHelper.startPage(queryPageBean.getCurrentPage(),queryPageBean.getPageSize());
         // 分页查询数据库
-        Page<Ssr> page = ssrDao.selectByConditon(queryPageBean.getQueryString());
+        Page<Ssr> page = ssrDao.selectByConditon(queryPageBean);
         log.info("[测试获取查询日期]day:{}", queryPageBean.getChooseDay());
         log.info("[测试获取查询时间段]time:{}", queryPageBean.getChooseTime());
 
@@ -123,10 +123,11 @@ public class SsrServiceImpl implements SsrService {
         log.info("[编辑自习室信息]ssrid:{}", ssrid);
         log.info("[编辑自习室信息]chooseDay:{}", chooseDay);
         log.info("[编辑自习室信息]chooseTime:{}", chooseTime);
+        String stringSsrid = String.valueOf(ssrid);
         LocalDateTime now = LocalDateTime.now();
         Long orderId = getOrderId(ssrid, chooseDay, chooseTime);
         long longUsername = Long.parseLong(username);
-        Order order = new Order(orderId, chooseDay, chooseTime, longUsername, now, 1);
+        Order order = new Order(orderId, chooseDay, chooseTime, longUsername, stringSsrid, now, 1);
         orderDao.insertOrder(order);
     }
 

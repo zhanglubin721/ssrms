@@ -3,7 +3,7 @@
 <mapper namespace="com.yanghui.ssrms.dao.OrderDao">
 
     <insert id="insertOrder" parameterType="com.yanghui.ssrms.pojo.Order">
-        insert into t_order (id, chooseday, choosetime, user_username, ordertime, isfinish) VALUES
-        (#{id}, #{chooseday}, #{choosetime}, #{user_username}, #{ordertime}, #{isfinish})
+        insert into t_order (id, chooseday, choosetime, user_username, ssr_ssrid, ordertime, isfinish) VALUES
+        (#{id}, #{chooseday}, #{choosetime}, #{user_username}, #{ssr_ssrid}, #{ordertime}, #{isfinish})
     </insert>
 </mapper>

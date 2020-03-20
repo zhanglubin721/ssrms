@@ -16,6 +16,7 @@ public class Order implements Serializable {
     private String chooseday;
     private String choosetime;
     private Long user_username;
+    private String ssr_ssrid;
     private LocalDateTime ordertime;
     private int isfinish;
 }

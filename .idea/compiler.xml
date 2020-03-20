@@ -8,9 +8,9 @@
         <outputRelativeToContentRoot value="true" />
         <module name="ssrms_service_provider" />
         <module name="ssrms_oms_backend" />
-        <module name="ssrms_common" />
-        <module name="ssrms_oms_web" />
         <module name="ssrms_interface" />
+        <module name="ssrms_oms_web" />
+        <module name="ssrms_common" />
       </profile>
     </annotationProcessing>
   </component>
