@@ -1,10 +1,11 @@
-D:\workspace\JavaProject\ssrms\ssrms_service_provider\src\main\java\com\yanghui\ssrms\dao\OrderDao.java
 D:\workspace\JavaProject\ssrms\ssrms_service_provider\src\main\java\com\yanghui\ssrms\service\impl\RoleServiceImpl.java
+D:\workspace\JavaProject\ssrms\ssrms_service_provider\src\main\java\com\yanghui\ssrms\dao\RoleDao.java
+D:\workspace\JavaProject\ssrms\ssrms_service_provider\src\main\java\com\yanghui\ssrms\service\impl\RabbitmqServiceImpl.java
+D:\workspace\JavaProject\ssrms\ssrms_service_provider\src\main\java\com\yanghui\ssrms\service\impl\UserServiceImpl.java
+D:\workspace\JavaProject\ssrms\ssrms_service_provider\src\main\java\com\yanghui\ssrms\dao\OrderDao.java
 D:\workspace\JavaProject\ssrms\ssrms_service_provider\src\main\java\com\yanghui\ssrms\dao\UserRoleDao.java
 D:\workspace\JavaProject\ssrms\ssrms_service_provider\src\main\java\com\yanghui\ssrms\dao\MenuDao.java
 D:\workspace\JavaProject\ssrms\ssrms_service_provider\src\main\java\com\yanghui\ssrms\dao\PermissionDao.java
-D:\workspace\JavaProject\ssrms\ssrms_service_provider\src\main\java\com\yanghui\ssrms\dao\RoleDao.java
-D:\workspace\JavaProject\ssrms\ssrms_service_provider\src\main\java\com\yanghui\ssrms\service\impl\UserServiceImpl.java
 D:\workspace\JavaProject\ssrms\ssrms_service_provider\src\main\java\com\yanghui\ssrms\service\impl\SsrServiceImpl.java
 D:\workspace\JavaProject\ssrms\ssrms_service_provider\src\main\java\com\yanghui\ssrms\dao\UserDao.java
 D:\workspace\JavaProject\ssrms\ssrms_service_provider\src\main\java\com\yanghui\ssrms\dao\TestDao.java

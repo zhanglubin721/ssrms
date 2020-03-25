@@ -23,4 +23,5 @@ public interface SsrService {
 
     void appointment(Long ssrid, String chooseDay, String chooseTime, String username);
 
+    void testRabbitmq(String message);
 }

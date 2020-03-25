@@ -100,6 +100,11 @@ public class SsrController {
         }
     }
 
+    @GetMapping("/testRabbitmq")
+    public void testRabbitmq() {
+        ssrService.testRabbitmq("已发送");
+    }
+
     public String getUsername() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (null != principal && principal instanceof User) {

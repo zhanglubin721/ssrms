@@ -12,10 +12,13 @@ import com.yanghui.ssrms.pojo.Order;
 import com.yanghui.ssrms.pojo.Ssr;
 import com.yanghui.ssrms.service.SsrService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 
+import javax.annotation.Resource;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.*;
@@ -32,6 +35,9 @@ public class SsrServiceImpl implements SsrService {
 
     @Autowired
     private OrderDao orderDao;
+
+    @Resource
+    private AmqpTemplate amqpTemplate;
 
     @Override
     public SsrPageResult pageQuery(QueryPageBean queryPageBean) {
@@ -129,6 +135,12 @@ public class SsrServiceImpl implements SsrService {
         long longUsername = Long.parseLong(username);
         Order order = new Order(orderId, chooseDay, chooseTime, longUsername, stringSsrid, now, 1);
         orderDao.insertOrder(order);
+    }
+
+    @Override
+    public void testRabbitmq(String message) {
+        log.info("[测试rabbitmq]message:{}", message);
+        amqpTemplate.convertAndSend("queueTestKey", message);
     }
 
     public String getTomorrow() {
