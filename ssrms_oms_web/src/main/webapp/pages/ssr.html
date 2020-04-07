@@ -4,9 +4,9 @@
         <!-- 页面meta -->
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>教学管理系统</title>
-        <meta name="description" content="张卢斌">
-        <meta name="keywords" content="张卢斌">
+        <title>自习室管理系统</title>
+        <meta name="description" content="杨慧">
+        <meta name="keywords" content="杨慧">
         <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
         <!-- 引入样式 -->
         <link rel="stylesheet" href="../plugins/elementui/index.css">
@@ -109,7 +109,7 @@
 
                     <!-- 编辑标签弹层 -->
                     <div class="add-form">
-                        <el-dialog title="编辑学生" :visible.sync="dialogFormVisible4Edit">
+                        <el-dialog title="编辑自习室" :visible.sync="dialogFormVisible4Edit">
                             <el-form ref="dataEditForm" :model="formData" :rules="rules" label-position="right" label-width="100px">
                                 <el-row>
                                     <el-col :span="16">
@@ -298,7 +298,7 @@
                 // 删除
                 handleDelete(row) {
                   //alert(row.id);
-                  this.$confirm("确认删除当前选中记录吗？","提示",{type:'warning'}).then(()=>{
+                  this.$confirm("确认删除该自习室信息吗？","提示",{type:'warning'}).then(()=>{
                     //点击确定按钮时只需此处代码
                     axios.delete (this.backend_url+"/ssr/delete.do?ssrid="+row.ssrid).then((response)=>{
                        if(response.data.flag){

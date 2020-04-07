@@ -1,3 +1,4 @@
+com\yanghui\ssrms\security\TMSSecurityUserDetailsService.class
+com\yanghui\ssrms\controller\OrderController.class
 com\yanghui\ssrms\controller\UserController.class
 com\yanghui\ssrms\controller\SsrController.class
-com\yanghui\ssrms\security\TMSSecurityUserDetailsService.class

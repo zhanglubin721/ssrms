@@ -2,15 +2,16 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="ssrms_service_provider" />
         <module name="ssrms_oms_backend" />
-        <module name="ssrms_interface" />
-        <module name="ssrms_oms_web" />
         <module name="ssrms_common" />
+        <module name="ssrms_oms_web" />
+        <module name="ssrms_interface" />
       </profile>
     </annotationProcessing>
   </component>

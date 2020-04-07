@@ -1,3 +1,4 @@
+com\yanghui\ssrms\service\OrderService.class
 com\yanghui\ssrms\service\RoleService.class
 com\yanghui\ssrms\service\UserService.class
 com\yanghui\ssrms\service\MenuService.class

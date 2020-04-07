@@ -1,4 +1,4 @@
-com\yanghui\ssrms\service\impl\RabbitmqServiceImpl.class
+com\yanghui\ssrms\service\impl\OrderServiceImpl.class
 com\yanghui\ssrms\service\impl\MenuServiceImpl.class
 com\yanghui\ssrms\service\impl\SsrServiceImpl.class
 com\yanghui\ssrms\service\impl\RoleServiceImpl.class

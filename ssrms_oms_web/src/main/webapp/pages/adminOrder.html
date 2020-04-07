@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- 页面meta -->
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>自习室管理系统</title>
+        <meta name="description" content="杨慧">
+        <meta name="keywords" content="杨慧">
+        <meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+        <!-- 引入样式 -->
+        <link rel="stylesheet" href="../plugins/elementui/index.css">
+        <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../css/style.css">
+    </head>
+    <body class="hold-transition">
+        <div id="app">
+            <div class="content-header">
+                <h1>自习室管理系统<small>管理员端订单管理</small></h1>
+                <el-breadcrumb separator-class="el-icon-arrow-right" class="breadcrumb">
+                    <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
+                    <el-breadcrumb-item>自习室管理系统</el-breadcrumb-item>
+                    <el-breadcrumb-item>管理员端订单管理</el-breadcrumb-item>
+                </el-breadcrumb>
+            </div>
+            <div class="app-container">
+                <div class="box">
+                    <div class="filter-container">
+                        <el-input placeholder="自习室编号" v-model="pagination.ssr_ssrid" style="width: 200px;" class="filter-item"></el-input>
+                        <el-input placeholder="用户ID" v-model="pagination.user_username" style="width: 200px;" class="filter-item"></el-input>
+                        <el-button @click="findPage(1)" class="dalfBut">查询</el-button>
+                    </div>
+
+                    <el-table size="small" current-row-key="id" :data="dataList" stripe highlight-current-row>
+                        <el-table-column type="index" align="center" label="序号"></el-table-column>
+                        <el-table-column prop="id" align="center" label="订单ID"></el-table-column>
+                        <el-table-column prop="user_username" align="center" label="预约用户"></el-table-column>
+                        <el-table-column prop="ssr_ssrid" align="center" label="自习室编号"></el-table-column>
+                        <el-table-column prop="chooseday" align="center" label="预约日期"></el-table-column>
+                        <el-table-column prop="choosetime" align="center" label="预约时间段"></el-table-column>
+                        <el-table-column prop="ordertime" align="center" label="预约时间"></el-table-column>
+                        <el-table-column label="订单状态" align="center">
+                            <template slot-scope="scope">
+                                <span>{{ scope.row.isfinish == '1' ? '预约成功' : '预约取消'}}</span>
+                            </template>
+                        </el-table-column>
+                        <el-table-column  align="center">
+                            <template slot-scope="scope">
+                                <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">修改预约</el-button>
+                                <el-button size="mini" type="danger" @click="handleDelete(scope.row)">取消预约</el-button>
+                            </template>
+                        </el-table-column>
+                    </el-table>
+                    <div class="pagination-container">
+                        <el-pagination
+                            class="pagiantion"
+                            @current-change="handleCurrentChange"
+                            :current-page="pagination.currentPage"
+                            :page-size="pagination.pageSize"
+                            layout="total, prev, pager, next, jumper"
+                            :total="pagination.total">
+                        </el-pagination>
+                    </div>
+
+                    <!-- 编辑标签弹层 -->
+                    <div class="add-form">
+                        <el-dialog title="修改订单" :visible.sync="dialogFormVisible4Edit">
+                            <el-form ref="dataEditForm" :model="formData" :rules="rules" label-position="right" label-width="100px">
+                                <el-row>
+                                    <el-col :span="16">
+                                        <el-form-item label="订单但编号" prop="id">
+                                            <el-input v-model="formData.id"/>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-row>
+                                <el-row>
+                                    <el-col :span="16">
+                                        <el-form-item label="预约日期" prop="chooseday">
+                                            <el-input v-model="formData.chooseday"/>
+                                        </el-form-item>
+                                    </el-col>
+                                    <el-col :span="16">
+                                        <el-form-item label="预约时间段" prop="choosetime">
+                                            <el-input v-model="formData.choosetime"/>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-row>
+                                <el-row>
+                                    <el-col :span="16">
+                                        <el-form-item label="自习室编号" prop="ssr_ssrid">
+                                            <el-input v-model="formData.ssr_ssrid"/>
+                                        </el-form-item>
+                                    </el-col>
+                                    <el-col :span="16">
+                                        <el-form-item label="用户ID" prop="user_username">
+                                            <el-input v-model="formData.user_username"/>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-row>
+                                <el-row>
+                                    <el-col :span="12">
+                                        <el-form-item label="订单状态">
+                                            <el-select v-model="formData.isfinish">
+                                                <el-option label="预约成功" value="1"></el-option>
+                                                <el-option label="预约取消" value="4"></el-option>
+                                            </el-select>
+                                        </el-form-item>
+                                    </el-col>
+                                </el-row>
+                            </el-form>
+                            <div slot="footer" class="dialog-footer">
+                                <el-button @click="dialogFormVisible4Edit = false">取消</el-button>
+                                <el-button type="primary" @click="handleEdit()">确定</el-button>
+                            </div>
+                        </el-dialog>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+    <!-- 引入组件库 -->
+    <script src="../js/vue.js"></script>
+    <script src="../plugins/elementui/index.js"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script src="../js/axios-0.18.0.js"></script>
+    <script>
+        axios.defaults.withCredentials=true;
+        var vue = new Vue({
+            el: '#app',
+            data:{
+                pagination: {//分页相关模型数据
+					  currentPage: 1,//当前页码
+					  pageSize:10,//每页显示的记录数
+					  total:0,//总记录数
+                      user_username:null,
+                      ssr_ssrid:null
+				},
+				dataList: [],//当前页要展示的分页列表数据
+                formData: {},//表单数据
+                dialogFormVisible: false,//增加表单是否可见
+                dialogFormVisible4Edit:false,//编辑表单是否可见
+                rules: {//校验规则
+                },
+                optionalDay: [],
+                optionalTime: [],
+                chooseDay: '',
+                chooseTime: '',
+                backend_url:"http://localhost:9002"
+            },
+            //钩子函数，VUE对象初始化完成后自动执行
+            created() {
+                this.findPage();
+            },
+            methods: {
+                //编辑
+                handleEdit() {
+                    //数据校验
+                    this.$refs["dataEditForm"].validate((valid)=>{
+                        if(valid){
+                            //数据校验成功,发起http请求
+                            axios.put(this.backend_url+"/order/modify.do",this.formData).then((response)=>{
+                                //判断是否成功
+                                if(response.data.flag){
+                                    //操作成功
+                                    this.$message.success(response.data.message);
+                                }else{
+                                    //操作失败
+                                    this.$message.error(response.data.message);
+                                }
+                            }).catch((error)=>{
+                                this.showMessage(error);
+                            }).finally(()=>{
+                                this.findPage();
+                                //隐藏新增窗口
+                                this.dialogFormVisible4Edit=false;
+                            });
+                        }else{
+                            //数据校验失败
+                            this.$message.error("数据校验失败");
+                        }
+
+                    })
+                },
+                //分页查询
+                findPage(pageNo) {
+                    //如果传入页码则先更新模型中的页码
+                    if(pageNo){
+                        this.pagination.currentPage = pageNo;
+                    }
+                    //构造请求参数
+                    var param = {
+                        currentPage: this.pagination.currentPage,
+                        pageSize: this.pagination.pageSize,
+                        user_username: this.pagination.user_username,
+                        ssr_ssrid: this.pagination.ssr_ssrid
+                    };
+                    //发起http请求
+                    axios.get(this.backend_url + "/order/adminFindPage.do",{ params:param}).then((response) => {
+                        //数据集和总数赋值给模型
+                        this.dataList=response.data.rows;
+                        this.pagination.total = response.data.total;
+                    }).catch((error)=>{
+                        this.showMessage(error);
+                    });
+
+                },
+                // 重置表单
+                resetForm(formName) {
+                    if(this.$refs[formName]){
+                        this.formData = {}
+                        this.$refs[formName].resetFields();
+                    }
+                },
+                // 弹出编辑窗口
+                handleUpdate(row) {
+                  //获取数据
+                    axios.get(this.backend_url+"/order/findById.do?id="+row.id).then((response)=>{
+                        if(response.data.flag){
+                            // 显示编辑窗口
+                            this.dialogFormVisible4Edit = true;
+                            //修改表单数据模型
+                            this.resetForm('dataEditForm');
+                            this.formData = response.data.data;
+                        }else{
+                            this.$message.error(response.data.message);
+                        }
+                    }).catch((error)=>{
+                        this.showMessage(error);
+                    });
+                },
+                //切换页码
+                handleCurrentChange(currentPage) {
+                    this.pagination.currentPage = currentPage;
+                    this.findPage();
+                },
+                // 取消订单
+                handleDelete(row) {
+                  //alert(row.id);
+                  this.$confirm("确认要取消该订单吗？","提示",{type:'warning'}).then(()=>{
+                    //点击确定按钮时只需此处代码
+                    axios.delete (this.backend_url+"/order/cancel.do?id="+row.id).then((response)=>{
+                       if(response.data.flag){
+                           //成功
+                           this.$message.success(response.data.message);
+                           this.findPage();
+                       } else {
+                           // 失败
+                           this.$message.error(response.data.message);
+                       }
+                    }).catch((error)=>{
+                        this.showMessage(error);
+                    });
+                  });
+                },
+                //权限不足提示
+                showMessage(r){
+                    console.log(r);
+                    if (r.message.indexOf("403") != -1){
+                        this.$message.error("无权访问");
+                    }else{
+                        this.$message.error("网络异常");
+                    }
+                }
+            }
+        })
+    </script>
+</html>

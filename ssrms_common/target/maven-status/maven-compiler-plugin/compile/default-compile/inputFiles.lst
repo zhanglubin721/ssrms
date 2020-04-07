@@ -1,6 +1,7 @@
 D:\workspace\JavaProject\ssrms\ssrms_common\src\main\java\com\yanghui\ssrms\pojo\Permission.java
 D:\workspace\JavaProject\ssrms\ssrms_common\src\main\java\com\yanghui\ssrms\entity\QueryPageBean.java
 D:\workspace\JavaProject\ssrms\ssrms_common\src\main\java\com\yanghui\ssrms\pojo\Menu.java
+D:\workspace\JavaProject\ssrms\ssrms_common\src\main\java\com\yanghui\ssrms\entity\AdminQueryPageBean.java
 D:\workspace\JavaProject\ssrms\ssrms_common\src\main\java\com\yanghui\ssrms\pojo\Role.java
 D:\workspace\JavaProject\ssrms\ssrms_common\src\main\java\com\yanghui\ssrms\entity\SsrPageResult.java
 D:\workspace\JavaProject\ssrms\ssrms_common\src\main\java\com\yanghui\ssrms\common\MessageConst.java

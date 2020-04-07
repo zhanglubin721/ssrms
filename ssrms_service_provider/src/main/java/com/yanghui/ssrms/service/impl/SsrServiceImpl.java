@@ -30,14 +30,10 @@ public class SsrServiceImpl implements SsrService {
     @Autowired
     private SsrDao ssrDao;
 
-    @Autowired
-    private JedisPool jedisPool;
 
     @Autowired
     private OrderDao orderDao;
 
-    @Resource
-    private AmqpTemplate amqpTemplate;
 
     @Override
     public SsrPageResult pageQuery(QueryPageBean queryPageBean) {
@@ -140,7 +136,6 @@ public class SsrServiceImpl implements SsrService {
     @Override
     public void testRabbitmq(String message) {
         log.info("[测试rabbitmq]message:{}", message);
-        amqpTemplate.convertAndSend("queueTestKey", message);
     }
 
     public String getTomorrow() {
@@ -182,25 +177,25 @@ public class SsrServiceImpl implements SsrService {
         return orderId;
     }
 
-    public void appointmentTest() {
-        Jedis jedis = null;
-        try{
-            jedis = jedisPool.getResource();
-            String key = jedis.get("key");
-            if (null == key) {
-                Ssr ssr = new Ssr(203L, "二楼三号", 1);
-                ObjectMapper objectMapper = new ObjectMapper();
-                String s = objectMapper.writeValueAsString(ssr);
-                jedis.set("000001", s);
-                jedis.expire("000001", 300);
-                log.info("[已存储key]ssr:{}", "key");
-            } else {
-                log.info("[缓存中已有数据]ssr:{}", "key");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException();
-        }  finally {
-            jedis.close();
-        }
-    }
+//    public void appointmentTest() {
+//        Jedis jedis = null;
+//        try{
+//            jedis = jedisPool.getResource();
+//            String key = jedis.get("key");
+//            if (null == key) {
+//                Ssr ssr = new Ssr(203L, "二楼三号", 1);
+//                ObjectMapper objectMapper = new ObjectMapper();
+//                String s = objectMapper.writeValueAsString(ssr);
+//                jedis.set("000001", s);
+//                jedis.expire("000001", 300);
+//                log.info("[已存储key]ssr:{}", "key");
+//            } else {
+//                log.info("[缓存中已有数据]ssr:{}", "key");
+//            }
+//        } catch (Exception e) {
+//            throw new RuntimeException();
+//        }  finally {
+//            jedis.close();
+//        }
+//    }
 }
